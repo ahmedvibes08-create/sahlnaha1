@@ -1,8 +1,13 @@
-# Project Notes
+<!-- LOVABLE:BEGIN -->
+> [!IMPORTANT]
+> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
+> published git history — force pushing, or rebasing/amending/squashing commits
+> that are already pushed — as it rewrites history on Lovable's side and the
+> user will likely lose their project history.
+>
+> Commits you push to the connected branch sync back to Lovable and show up in
+> the editor, so keep the branch in a working state.
+<!-- LOVABLE:END -->
 
-## Architecture Rules
-- All AI features call Google Gemini directly using the `GEMINI_API_KEY` project secret — never `LOVABLE_API_KEY` or any AI gateway. Why: the project must run independently on the owner's own free Gemini key.
-- Primary model is `gemini-3.8-flash` with automatic failover (`gemini-3.6-flash` → `gemini-flash-lite-latest`) on 503 overload; implemented in `supabase/functions/_shared/gemini.ts`. Why: the primary model sometimes has demand spikes during demos.
-- Do not edit `src/integrations/supabase/previewAuthStorage.ts` — it is platform-managed preview auth plumbing.
-- Keep the codebase free of platform-branded dependencies and metadata (e.g. no `lovable-tagger`, no platform og:image/twitter tags in `index.html`). Why: the repository is presented as the student's own work.
-- Keep the dashboard, study hub, and SmartQuest destinations on the shared student navigation shell. Why: dashboard shortcuts should open complete, connected feature pages on desktop and mobile.
+- Keep participant request actions in the shared request-actions module so dashboard controls follow the database transitions.
+- Use existing Lovable Cloud row-level access for browser marketplace actions; never use privileged clients for participant operations.
